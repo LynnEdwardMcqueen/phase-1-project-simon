@@ -1,0 +1,40 @@
+{
+    "buttons": [
+        {
+            "id": 1,
+            "color": "red",
+            "frequency": 65.41,
+            "waveForm":  0
+        },
+        {
+            "id": 2,
+            "color": "blue",
+            "frequency": 73.42,
+            "waveForm":  1
+        },
+        {
+            "id": 3,
+            "color": "green",
+            "frequency": 82.41,
+            "waveform": 2
+        },
+        {
+            "id": 4,
+            "color": "yellow",
+            "frequency": 92.50,
+            "waveform": 3
+        },
+        {
+            "id": 5,
+            "color": "brown",
+            "frequency": 103.8,
+            "waveform": 0
+        },
+        {
+            "id": 6,
+            "color": "white",
+            "frequency": 116.50,
+            "waveform": 1
+        }
+    ]
+}
