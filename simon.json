@@ -36,5 +36,12 @@
             "frequency": 116.50,
             "waveform": 1
         }
+    ],
+    "highScore": [
+        {
+            "firstName": "",
+            "lastName": "",
+            "score":""
+        }
     ]
 }
