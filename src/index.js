@@ -5,7 +5,7 @@ let sequence = {
    }
 let sequenceDuration
 
-
+let buttonData = []
 let domLoaded = false
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -22,6 +22,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // Make sure the DOM is loaded before configuring the buttons
     while(domLoaded === false) {}
     buttons.forEach(renderOneButton)
+    buttonData = Array.from(buttons)
+    debugger
     initiateSequence()
     // Start game or configure buttons
 
