@@ -26,13 +26,13 @@
         },
         {
             "id": 5,
-            "color": "pink",
+            "color": "purple",
             "frequency": 103.8,
             "waveform": 0
         },
         {
             "id": 6,
-            "color": "white",
+            "color": "turquoise",
             "frequency": 116.50,
             "waveform": 1
         }
