@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch( "http://localhost:3000/buttons")
     .then(result => result.json())
     .then(buttons => buttons.forEach(configureButton))
-    //.then((buttons) => console.log(buttons))
+   
 
 })
 
@@ -20,9 +20,3 @@ document.addEventListener("DOMContentLoaded", () => {
 function configureButton(button) {
     console.log(button);
 } 
-
-function configureButtons(buttons) {
-//    console.log(buttons)
-    buttons.forEach(configureButton)
-    
-}
