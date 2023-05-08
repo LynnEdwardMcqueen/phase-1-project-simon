@@ -60,7 +60,12 @@ fetch ("http://localhost:3000/highScore")
     highScore = highScoreResult[0].score;
 })
     
+function patchHost(url, bodyData) {
+    debugger
+    console.log(url)
+    console.log(bodyData)
 
+}
 
 
 console.log("Configured")
@@ -89,6 +94,8 @@ function processLoss() {
         highScore = sequence.array.length
         let highScoreElement = document.getElementById("high-score")
         highScoreElement.innerText = `High Score: ${highScore}`
+        patchHost("http://localhost:3000/highScore", {score: `${highScore}`})
+        
     }
 
 }
@@ -104,7 +111,7 @@ function restoreButtonUserSequence()
     // oscillatorNode.stop();
     if (sequence.userPlaybackIndex === sequence.index) {
         // The user has successfully repeated the sequence.  Repeat the 
-        // sequence and add 1 more to it.
+        // sequence and add 1 more to it.  Delay 1 second before initiating the sequence.
         setTimeout( initiateSequence, 1000);
     } else {
         // Set up to look for the user's input on the next item in the sequence
@@ -116,6 +123,7 @@ function restoreButtonUserSequence()
 
 function displayLoserX() {
     let failureStrike = document.getElementById("loser-x")
+
     failureStrike.style = ""
 
 }
