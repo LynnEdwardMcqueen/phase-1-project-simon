@@ -54,14 +54,15 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 .catch(e => console.log(e))
 
-fetch ("http://localhost:3000/highScore")
+fetch ("http://localhost:3000/highScore/1")
 .then(result => result.json())
 .then(highScoreResult => {
-    highScore = highScoreResult[0].score;
+    debugger
+    console.log(highScoreResult)
+    highScore = highScoreResult.score;
 })
     
 function patchHost(url, bodyData) {
-    debugger
     console.log(url)
     console.log(bodyData)
     fetch(url, {
@@ -92,7 +93,6 @@ function startGame()
     sequence.userPlaybackIndex = 0;
     sequence.array = [];
 
-    debugger
     initiateSequence()
 }
 
@@ -105,14 +105,14 @@ function processLoss() {
         highScore = sequence.array.length
         let highScoreElement = document.getElementById("high-score")
         highScoreElement.innerText = `High Score: ${highScore}`
-        patchHost("http://localhost:3000/highScore/1", {score: `${highScore}`})
+        patchHost("http://localhost:3000/highScore/1", {score: highScore})
         
     }
 
 }
 
 function userPlaybackTimeout( ) {
-    debugger
+    
     processLoss()
 }
 function restoreButtonUserSequence()
@@ -151,8 +151,7 @@ function checkUserPlayback(event) {
         // Leave the button bright for 200 milliseconds before looking for the next item in the sequence.
         setTimeout(restoreButtonUserSequence, 200)
     } else {
-        debugger
-     
+             
         // TODO - fix this
         processLoss()
 //        event.target.style.color = "black"
