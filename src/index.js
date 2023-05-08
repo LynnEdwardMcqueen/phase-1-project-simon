@@ -56,9 +56,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 fetch ("http://localhost:3000/highScore")
 .then(result => result.json())
-.then(highScore => {
+.then(highScoreResult => {
     debugger
-    console.log(highScore)
+    highScore = highScoreResult[0].score;
 })
     
 
