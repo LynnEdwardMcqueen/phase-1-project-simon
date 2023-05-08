@@ -4,6 +4,7 @@ let context = null;
 let waveforms = ["sine", "square", "sawtooth", "triangle"];
 let oscillatorNode
 let userPlaybackWatchdog
+let highScore
 
 
 let sequence = {
@@ -33,6 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 
 
+
  fetch( "http://localhost:3000/buttons")
 .then(result => result.json())
 .then(buttons => {
@@ -51,6 +53,13 @@ document.addEventListener("DOMContentLoaded", () => {
    
 })
 .catch(e => console.log(e))
+
+fetch ("http://localhost:3000/highScore")
+.then(result => result.json())
+.then(highScore => {
+    debugger
+    console.log(highScore)
+})
     
 
 
@@ -118,7 +127,7 @@ function checkUserPlayback(event) {
         setTimeout(restoreButtonUserSequence, 200)
     } else {
         debugger
-        console.log("User failed")
+     
         // TODO - fix this
         processLoss()
 //        event.target.style.color = "black"
