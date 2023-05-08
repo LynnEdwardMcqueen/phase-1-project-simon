@@ -42,9 +42,10 @@ document.addEventListener("DOMContentLoaded", () => {
     buttons.forEach(renderOneButton)
     buttonData = Array.from(buttons)
 
-    initiateSequence()
-    // Start game or configure buttons
-
+    // Now that the game is all set up, add the event listener for the start button.
+    let startGameButton = document.getElementById("start-game");
+    startGameButton.addEventListener("click", startGame)
+ 
     // Once game has started, disable configure buttons
 
    
@@ -56,19 +57,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
 console.log("Configured")
 
+function startGame()
+{
+    // Turn of the strike x from the failing game
+    let failureStrike = document.getElementById("loser-x")
+    failureStrike.style.display = "none"
+
+    // Reset the game.
+    sequence.index = 0;
+    sequence.userPlaybackIndex = 0;
+    sequence.array = [];
+
+    debugger
+    initiateSequence()
+}
+
+function processLoss() {
+    displayLoserX()
+    generateLoserSound();
+
+}
+
 function userPlaybackTimeout( ) {
     debugger
-    console.log("LOSER")
-
+    processLoss()
 }
 function restoreButtonUserSequence()
 {
     let button = document.getElementById(`button_${sequence.array[sequence.userPlaybackIndex]}`)
     button.style.filter = "brightness(50%)";
+    // oscillatorNode.stop();
     if (sequence.userPlaybackIndex === sequence.index) {
         // The user has successfully repeated the sequence.  Repeat the 
         // sequence and add 1 more to it.
-        setTimeout( initiateSequence, 700);
+        setTimeout( initiateSequence, 1000);
     } else {
         // Set up to look for the user's input on the next item in the sequence
         sequence.userPlaybackIndex++;    
@@ -77,11 +99,19 @@ function restoreButtonUserSequence()
     }
 }
 
+function displayLoserX() {
+    let failureStrike = document.getElementById("loser-x")
+    failureStrike.style = ""
+
+}
 function checkUserPlayback(event) {
     // The id of the element is "button_${id}".  Use slice to get rid of "button_"
     let id = parseInt(event.target.id.slice(7));
+
+    clearTimeout(userPlaybackWatchdog);
     if (id === sequence.array[sequence.userPlaybackIndex] ) {
-        clearTimeout(userPlaybackWatchdog);
+        
+        generateSoundForButton(false) 
         // let the brightness rip!
         event.target.style.filter = "brightness(200%)"
         // Leave the button bright for 200 milliseconds before looking for the next item in the sequence.
@@ -90,7 +120,8 @@ function checkUserPlayback(event) {
         debugger
         console.log("User failed")
         // TODO - fix this
-        event.target.style.color = "black"
+        processLoss()
+//        event.target.style.color = "black"
     }
 
 }
@@ -108,7 +139,7 @@ function initializeUserPlayback() {
 function sequenceComplete() {
     return(sequence.index === (sequence.array.length - 1) )
 }
-1
+
 function clearButtonInSequence() {
 
     let button = document.getElementById(`button_${sequence.array[sequence.index]}`)
@@ -122,36 +153,68 @@ function clearButtonInSequence() {
     }
 }
 
-function nextButtonInSequence() {
-    
-    sequence.index++;
-    let button = document.getElementById(`button_${sequence.array[sequence.index]}`)
-    button.style.filter = "brightness(200%)"
+function generateLoserSound() {
+    let oscillatorNode = context.createOscillator();
+    // let oscillatorNode2 = context.createOscillator();
 
-//    if (context === null) {
-//        context = new AudioContext();
-//    }
+    let gainNode = context.createGain();
+    // let gainNode2 = context.createGain();
+
+    oscillatorNode.frequency.value = 73.42;
+    // oscillatorNode2.frequency.value = 94;
+
+    oscillatorNode.type = "square"
+    // oscillatorNode2.type = "triangle"
+
+    gainNode.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + 3)
+    // gainNode2.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + 3)
+
+    oscillatorNode.connect(gainNode);
+    // oscillatorNode2.connect(gainNode2);
+
+    gainNode.connect(context.destination);
+    // gainNode.connect(context.destination)
+    oscillatorNode.start(0);
+    // oscillatorNode2.start(0);
+}
+
+function generateSoundForButton(hostSequenceActive) {
     let oscillatorNode = context.createOscillator();
     let gainNode = context.createGain();
     // Retrieve the desired waveform and frequency associated with this button.
 
     console.log(buttonData)
+    let buttonDataIndex
     // The buttons are indexed from 1, but the buttonData array is indexed from 0.
-    let buttonDataIndex = sequence.array[sequence.index] - 1
+    if (hostSequenceActive ) {
+        buttonDataIndex = sequence.array[sequence.index] - 1
+    } else {
+        buttonDataIndex = sequence.array[sequence.userPlaybackIndex] - 1
+    }
 
     oscillatorNode.frequency.value = buttonData[buttonDataIndex].frequency
     // The waveform is different from the frequency.  The stored value is an index
     // into a lookup table that has a string that describes the waveform.
     oscillatorNode.type = waveforms[buttonData[buttonDataIndex].waveform]
     d =  waveforms[buttonData[sequence.array[sequence.index] - 1].waveform]
-    if (d === null) {
-        debugger
-    }
+
 
     gainNode.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + 1)
     oscillatorNode.connect(gainNode);
     gainNode.connect(context.destination);
     oscillatorNode.start(0);
+}
+function nextButtonInSequence() {
+    
+    sequence.index++;
+    let button = document.getElementById(`button_${sequence.array[sequence.index]}`)
+    button.style.filter = "brightness(200%)"
+    generateSoundForButton(true)
+
+//    if (context === null) {
+//        context = new AudioContext();
+//    }
+
 
     if (sequenceComplete() === false) {
 
@@ -173,6 +236,11 @@ function initiateSequence() {
     sequence.array.push(Math.floor(Math.random() * 6))
     // Add 1 since the buttons are numbered from 1 to 6
     sequence.array[sequence.index]++;
+
+    // Update the score display
+
+    let scoreDisplay = document.getElementById("score")
+    scoreDisplay.innerText = `Score: ${sequence.array.length}`
  
     if (sequence.array.length <= 6) {
         sequenceDuration = 1000
