@@ -57,7 +57,6 @@ document.addEventListener("DOMContentLoaded", () => {
 fetch ("http://localhost:3000/highScore")
 .then(result => result.json())
 .then(highScoreResult => {
-    debugger
     highScore = highScoreResult[0].score;
 })
     
@@ -84,6 +83,13 @@ function startGame()
 function processLoss() {
     displayLoserX()
     generateLoserSound();
+
+    // Update the high score display if the record is broken
+    if (sequence.array.length > highScore) {
+        highScore = sequence.array.length
+        let highScoreElement = document.getElementById("high-score")
+        highScoreElement.innerText = `High Score: ${highScore}`
+    }
 
 }
 
