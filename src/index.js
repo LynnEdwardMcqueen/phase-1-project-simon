@@ -64,6 +64,17 @@ function patchHost(url, bodyData) {
     debugger
     console.log(url)
     console.log(bodyData)
+    fetch(url, {
+        method: "PATCH",
+        headers: {
+          'Content-Type': "application/json"
+         },
+        body: JSON.stringify(bodyData)
+      })
+      .then(res => res.json())
+      .then(updatedRes => console.log(updatedRes))
+      .catch(err => console.log(err))
+  
 
 }
 
@@ -94,7 +105,7 @@ function processLoss() {
         highScore = sequence.array.length
         let highScoreElement = document.getElementById("high-score")
         highScoreElement.innerText = `High Score: ${highScore}`
-        patchHost("http://localhost:3000/highScore", {score: `${highScore}`})
+        patchHost("http://localhost:3000/highScore/1", {score: `${highScore}`})
         
     }
 
