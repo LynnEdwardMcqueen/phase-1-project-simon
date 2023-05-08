@@ -60,6 +60,7 @@ fetch ("http://localhost:3000/highScore/1")
     debugger
     console.log(highScoreResult)
     highScore = highScoreResult.score;
+    updateHighScoreDisplay();
 })
     
 function patchHost(url, bodyData) {
@@ -96,6 +97,11 @@ function startGame()
     initiateSequence()
 }
 
+function updateHighScoreDisplay() {
+    let highScoreElement = document.getElementById("high-score")
+    highScoreElement.innerText = `High Score: ${highScore}`
+}
+
 function processLoss() {
     displayLoserX()
     generateLoserSound();
@@ -103,8 +109,7 @@ function processLoss() {
     // Update the high score display if the record is broken
     if (sequence.array.length > highScore) {
         highScore = sequence.array.length
-        let highScoreElement = document.getElementById("high-score")
-        highScoreElement.innerText = `High Score: ${highScore}`
+        updateHighScoreDisplay();
         patchHost("http://localhost:3000/highScore/1", {score: highScore})
         
     }
