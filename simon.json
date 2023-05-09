@@ -1,42 +1,42 @@
-{
+    {
   "buttons": [
     {
       "id": 1,
-      "color": "red",
-      "frequency": 65.41,
-      "waveForm": 0
-    },
-    {
-      "id": 2,
       "color": "blue",
       "frequency": 73.42,
       "waveForm": 1
     },
     {
-      "id": 3,
+      "id": 2,
       "color": "green",
       "frequency": 82.41,
       "waveform": 2
     },
     {
-      "id": 4,
+      "id": 3,
       "color": "yellow",
       "frequency": 92.5,
       "waveform": 3
     },
     {
-      "id": 5,
+      "id": 4,
       "color": "purple",
       "frequency": 103.8,
       "waveform": 0
     },
     {
-      "id": 6,
+      "id": 5,
       "color": "turquoise",
-      "frequency": 116.5,
+      "frequency": 116.54,
       "waveform": 1
+    },
+    {
+      "id": 6,
+      "color": "red",
+      "frequency": 130.81,
+      "waveForm": 0
     }
-  ],
+   ],
   "highScore": [
     {
       "id": 1,
