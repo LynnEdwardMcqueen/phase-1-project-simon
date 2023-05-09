@@ -36,7 +36,7 @@ body {
     border: grey solid 1px;
     padding: 1rem;
     width: 10rem;
-    height: 10rem;
+    height: 8rem;
     display: inline-grid;
     margin: 1rem 2rem;
     box-shadow: 3px 4px #e04b52
@@ -70,9 +70,14 @@ body {
     color: #e04b52;
   }
   
+  .form-container {
+    float: left;
+    width: 16.66%;
+    padding: 5px;
+  }
   .container {
     padding: 1rem;
-    width: stretch;
+/*    width: stretch; */
     height: auto;
     display: none;
     background: #515DA2;
