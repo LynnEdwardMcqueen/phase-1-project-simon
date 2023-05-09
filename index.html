@@ -12,43 +12,34 @@
   <div id="simon-header">
     <h1>Simon...ish<br></h1> 
   </div>
+</div>
+<p style="text-align-center" ><h1 id="high-score">High Score: 0</h1></p>
+<p style="text-align-center"><h1 id="score"> Score: 0 </h1></p>
+<p style="text-align:center">
+  <button id="start-game">Start</button>
+</p>
+<div id="button-collection"></div>
+
   <p style="text-align:center">
     <button id="new-toy-btn">Configure Your Buttons!</button>
   </p>
   <div class="container">
-    <form class="configure-buttons-form">
-      <h3>Create a toy!</h3>
+    <form id="button1-form">
+        <p>Choose the button1 frequency</p>
+        <input type="radio" name="button1-waveform" id="sine" value="sine">
+        <label for="sine">sine</label><br>
 
-      <input
-        type="text"
-        name="name"
-        value=""
-        placeholder="Enter a toy's name..."
-        class="input-text"
-      />
-      <br />
-      <input
-        type="text"
-        name="image"
-        value=""
-        placeholder="Enter a toy's image URL..."
-        class="input-text"
-      />
-      <br />
-      <input
-        type="submit"
-        name="submit"
-        value="Create Toy"
-        class="submit"
-      />
+        <input type="radio" name="button1-waveform" id="square" value="square">
+        <label for="sine">square</label><br>
+        <input type="radio" name="button1-waveform" id="sawtooth" value="sawtooth">
+        <label for="sine">sawtooth</label><br>
+        <input type="radio" name="button1-waveform" id="triangle" value="triangle">
+        <label for="sine">triangle</label><br>
+
+        
     </form>
   </div>
-  <p style="text-align-center" ><h1 id="high-score">High Score: 0</h1></p>
-  <p style="text-align-center"><h1 id="score"> Score: 0 </h1></p>
-  <div id="button-collection"></div>
-  <p style="text-align:center">
-    <button id="start-game">Start</button>
-  </p>
+ 
   <img id="loser-x" src="./src/Family_Feud_Strike_Indicator.webp" alt="Loser" width="125" height="150" class="center" style="display:none">
 </body>
 </html>
