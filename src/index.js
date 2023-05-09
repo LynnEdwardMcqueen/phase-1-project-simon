@@ -1,5 +1,5 @@
 console.log("Here in index.js")
-
+let configureButtons = false;
 let context = null;
 let waveforms = ["sine", "square", "sawtooth", "triangle"];
 let oscillatorNode
@@ -30,6 +30,21 @@ function init() {
 document.addEventListener("DOMContentLoaded", () => {
    domLoaded = true  
    console.log("domLoaded")
+
+  // This is a button to configure Simonish buttons
+  const addBtn = document.querySelector("#new-toy-btn");
+  const toyFormContainer = document.querySelector(".container");
+  // toyFormContainer.style.display = "block";
+  addBtn.addEventListener("click", () => {
+    // hide & seek with the form
+    debugger
+    configureButtons = !configureButtons;
+    if (configureButtons) {
+      toyFormContainer.style.display = "block";
+    } else {
+      toyFormContainer.style.display = "none";
+    }
+  });
    
 })
 
@@ -40,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
 .then(buttons => {
  
     // Make sure the DOM is loaded before configuring the buttons
-    while(domLoaded === false) {}
+    // while(domLoaded === false) {}
     buttons.forEach(renderOneButton)
     buttonData = Array.from(buttons)
 
