@@ -33,16 +33,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // This is a button to configure Simonish buttons
   const addBtn = document.querySelector("#new-toy-btn");
-  const toyFormContainer = document.querySelector(".container");
-  // toyFormContainer.style.display = "block";
+  const configureButtonsContainer = document.querySelector(".container");
+  // configureButtonsContainer.style.display = "block";
   addBtn.addEventListener("click", () => {
     // hide & seek with the form
     debugger
     configureButtons = !configureButtons;
     if (configureButtons) {
-      toyFormContainer.style.display = "block";
+      configureButtonsContainer.style.display = "block";
     } else {
-      toyFormContainer.style.display = "none";
+      configureButtonsContainer.style.display = "none";
     }
   });
    
