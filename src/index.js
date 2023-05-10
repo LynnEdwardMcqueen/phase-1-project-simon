@@ -32,17 +32,19 @@ document.addEventListener("DOMContentLoaded", () => {
    console.log("domLoaded")
 
   // This is a button to configure Simonish buttons
-  const addBtn = document.querySelector("#new-toy-btn");
-  const configureButtonsContainer = document.querySelector(".container");
+  const addBtn = document.querySelector("#config-btn");
+  const configureButtonsContainer = document.querySelector("#config-container");
+  debugger
   // configureButtonsContainer.style.display = "block";
   addBtn.addEventListener("click", () => {
     // hide & seek with the form
     debugger
     configureButtons = !configureButtons;
     if (configureButtons) {
-      configureButtonsContainer.style.display = "block";
+        clearLoserX()
+        configureButtonsContainer.style.display = "block";
     } else {
-      configureButtonsContainer.style.display = "none";
+        configureButtonsContainer.style.display = "none";
     }
   });
    
@@ -57,6 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Make sure the DOM is loaded before configuring the buttons
     // while(domLoaded === false) {}
     buttons.forEach(renderOneButton)
+    buttons.forEach(preloadButtonFormFields)
     buttonData = Array.from(buttons)
 
     // Now that the game is all set up, add the event listener for the start button.
@@ -77,6 +80,10 @@ fetch ("http://localhost:3000/highScore/1")
     highScore = highScoreResult.score;
     updateHighScoreDisplay();
 })
+
+functionPreloadButtonFormFields() {
+    f
+}
     
 function patchHost(url, bodyData) {
     console.log(url)
@@ -101,9 +108,7 @@ console.log("Configured")
 function startGame()
 {
     // Turn of the strike x from the failing game
-    let failureStrike = document.getElementById("loser-x")
-    failureStrike.style.display = "none"
-
+    clearLoserX()
     // Reset the game.
     sequence.index = 0;
     sequence.userPlaybackIndex = 0;
@@ -152,10 +157,15 @@ function restoreButtonUserSequence()
     }
 }
 
+function clearLoserX() {
+    let failureStrike = document.getElementById("loser-x")
+    failureStrike.style.display = "none"
+
+}
 function displayLoserX() {
     let failureStrike = document.getElementById("loser-x")
 
-    failureStrike.style = ""
+    failureStrike.style.display = "block"
 
 }
 function checkUserPlayback(event) {
@@ -174,18 +184,14 @@ function checkUserPlayback(event) {
              
         // TODO - fix this
         processLoss()
-//        event.target.style.color = "black"
     }
 
 }
 
 
 function initializeUserPlayback() {
-    // Enable the event listeners?
-
-    // Clear the user related sequence information
+       // Clear the user related sequence information
     sequence.userPlaybackIndex = 0;
-
     // Kick off the timeout timer
     userPlaybackWatchdog = setTimeout(userPlaybackTimeout, 2000);
 }
@@ -208,27 +214,13 @@ function clearButtonInSequence() {
 
 function generateLoserSound() {
     let oscillatorNode = context.createOscillator();
-    // let oscillatorNode2 = context.createOscillator();
-
     let gainNode = context.createGain();
-    // let gainNode2 = context.createGain();
-
     oscillatorNode.frequency.value = 73.42;
-    // oscillatorNode2.frequency.value = 94;
-
     oscillatorNode.type = "square"
-    // oscillatorNode2.type = "triangle"
-
     gainNode.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + 3)
-    // gainNode2.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + 3)
-
     oscillatorNode.connect(gainNode);
-    // oscillatorNode2.connect(gainNode2);
-
     gainNode.connect(context.destination);
-    // gainNode.connect(context.destination)
     oscillatorNode.start(0);
-    // oscillatorNode2.start(0);
 }
 
 function generateSoundForButton(hostSequenceActive) {
@@ -323,9 +315,6 @@ let renderOneButton = (button) => {
     buttonDiv.style.backgroundColor = button.color;
     buttonDiv.id = `button_${button.id}`
     buttonDiv.addEventListener("click", checkUserPlayback)
-
-
-  
 
  
     // Now append the card div node to the to collection

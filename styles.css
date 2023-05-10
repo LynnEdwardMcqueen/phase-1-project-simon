@@ -84,6 +84,10 @@ body {
     opacity: .8;
   }
   
+  #config-container {
+    display: none;
+  }
+
   .configure-button-form {
     width: 80%
   }
