@@ -59,6 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Make sure the DOM is loaded before configuring the buttons
     // while(domLoaded === false) {}
     buttons.forEach(renderOneButton)
+    debugger
     buttons.forEach(preloadButtonFormFields)
     buttonData = Array.from(buttons)
 
@@ -81,8 +82,9 @@ fetch ("http://localhost:3000/highScore/1")
     updateHighScoreDisplay();
 })
 
-functionPreloadButtonFormFields() {
-    f
+function preloadButtonFormFields(buttonInfo) {
+    console.log(buttonInfo)
+    debugger
 }
     
 function patchHost(url, bodyData) {
