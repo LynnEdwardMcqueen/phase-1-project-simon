@@ -33,18 +33,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // This is a button to configure Simonish buttons
   const addBtn = document.querySelector("#config-btn");
-  const configureButtonsContainer = document.querySelector("#config-container");
-  debugger
+   
   // configureButtonsContainer.style.display = "block";
   addBtn.addEventListener("click", () => {
     // hide & seek with the form
-    debugger
     configureButtons = !configureButtons;
     if (configureButtons) {
         clearLoserX()
-        configureButtonsContainer.style.display = "block";
+        displayButtonConfigForm();
     } else {
-        configureButtonsContainer.style.display = "none";
+        clearButtonConfigForm();
     }
   });
    
@@ -131,7 +129,10 @@ function startGame()
 {
     // Turn of the strike x from the failing game
     clearLoserX()
-    // Reset the game.
+    // Turn off the button configuration forms
+    clearButtonConfigForm()
+
+    // Reset the game state
     sequence.index = 0;
     sequence.userPlaybackIndex = 0;
     sequence.array = [];
@@ -177,6 +178,17 @@ function restoreButtonUserSequence()
         userPlaybackWatchdog = setTimeout(userPlaybackTimeout, 2000);
 
     }
+}
+
+
+function clearButtonConfigForm() {
+    const configureButtonsContainer = document.querySelector("#config-container");
+    configureButtonsContainer.style.display = "none";
+}
+
+function displayButtonConfigForm() {
+    const configureButtonsContainer = document.querySelector("#config-container");
+    configureButtonsContainer.style.display = "block";
 }
 
 function clearLoserX() {
