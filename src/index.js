@@ -54,10 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
 .then(result => result.json())
 .then(buttons => {
  
-    // Make sure the DOM is loaded before configuring the buttons
-    // while(domLoaded === false) {}
     buttons.forEach(renderOneButton)
-    debugger
     buttons.forEach(preloadButtonFormFields)
     buttonData = Array.from(buttons)
 
@@ -101,7 +98,11 @@ function preloadButtonFormFields(buttonInfo) {
             break;
     } 
 
-    // 
+    // Populate the color pull down menu
+    document.getElementById(`button${buttonInfo.id}-color`).value = buttonInfo.color
+
+    // Fill in the frequency 
+    document.getElementById(`button-${buttonInfo.id}-freq`).value = buttonInfo.frequency
 
 }
     
