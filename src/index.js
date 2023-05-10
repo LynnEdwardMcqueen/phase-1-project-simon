@@ -86,7 +86,8 @@ function preloadButtonFormFields(buttonInfo) {
     debugger
 
     let configForm = document.getElementById(`button${buttonInfo.id}-form`)
-    let c = document.getElementById(`button${buttonInfo.id}-sine`)
+   
+    // Configure the waveform radio buttons
     switch(buttonInfo.waveform) {
         case 0:
             document.getElementById(`button${buttonInfo.id}-sine`).checked = true;
@@ -101,6 +102,9 @@ function preloadButtonFormFields(buttonInfo) {
             document.getElementById(`button${buttonInfo.id}-triangle`).checked = true;
             break;
     } 
+
+    // 
+
 }
     
 function patchHost(url, bodyData) {
