@@ -83,8 +83,24 @@ fetch ("http://localhost:3000/highScore/1")
 })
 
 function preloadButtonFormFields(buttonInfo) {
-    console.log(buttonInfo)
     debugger
+
+    let configForm = document.getElementById(`button${buttonInfo.id}-form`)
+    let c = document.getElementById(`button${buttonInfo.id}-sine`)
+    switch(buttonInfo.waveform) {
+        case 0:
+            document.getElementById(`button${buttonInfo.id}-sine`).checked = true;
+            break
+        case 1:
+            document.getElementById(`button${buttonInfo.id}-square`).checked = true;
+            break
+        case 2:
+            document.getElementById(`button${buttonInfo.id}-sawtooth`).checked = true;
+            break;
+        case 3:
+            document.getElementById(`button${buttonInfo.id}-triangle`).checked = true;
+            break;
+    } 
 }
     
 function patchHost(url, bodyData) {
