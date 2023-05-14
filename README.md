@@ -32,6 +32,9 @@ Once the desired configurations for an individual game button have been made, th
 
 ![Config Forms](./src/Simon%20Config%20Forms.png)
 
+## Technical Help
+I would like to send a huge shout out to Kirupa Chinnathambi.  His youtube video and source code helped me integrate sound into this web application. This can be found at [Sound Tutorial](https://www.youtube.com/watch?v=PYGGmE9Z7eo)
+
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first
