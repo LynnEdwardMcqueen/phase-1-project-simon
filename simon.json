@@ -4,43 +4,43 @@
       "id": 1,
       "color": "blue",
       "frequency": "73.42",
-      "waveform": 2
+      "waveform": 1
     },
     {
       "id": 2,
       "color": "saddlebrown",
       "frequency": "82.41",
-      "waveform": 2
+      "waveform": 1
     },
     {
       "id": 3,
       "color": "yellow",
       "frequency": "92.5",
-      "waveform": 2
+      "waveform": 1
     },
     {
       "id": 4,
-      "color": "orchid",
+      "color": "purple",
       "frequency": "103.8",
-      "waveform": 2
+      "waveform": 1
     },
     {
       "id": 5,
       "color": "turquoise",
       "frequency": "116.54",
-      "waveform": 2
+      "waveform": 1
     },
     {
       "id": 6,
       "color": "red",
       "frequency": "130.81",
-      "waveform": 2
+      "waveform": 1
     }
   ],
   "highScore": [
     {
       "id": 1,
-      "score": 13
+      "score": 10
     }
   ]
 }
