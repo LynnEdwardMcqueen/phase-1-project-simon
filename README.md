@@ -32,4 +32,15 @@ Once the desired configurations for an individual game button have been made, th
 
 ![Config Forms](./src/Simon%20Config%20Forms.png)
 
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first
+to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
+
 
