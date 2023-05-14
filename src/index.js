@@ -20,10 +20,10 @@ let configButtonListerEnabled = true;
 // of the sequence to the user.  The userPlaybackIndex is the current button in the sequence
 // that the user is playing.
 let sequence = {
-    array: [], 
+    array: [],
     index: 0,
     userPlaybackIndex: 0,
-   }
+}
 
 // This holds the time in milliseconds to display the button when the host is presenting the
 // sequence to the user.  It becomes reduced as the game goes on.
@@ -40,73 +40,73 @@ function init() {
     try {
         context = new AudioContext();
     }
-    catch(e) {
-    alert('Web Audio API is not supported in this browser');
+    catch (e) {
+        alert('Web Audio API is not supported in this browser');
     }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-   domLoaded = true  
- 
+    domLoaded = true
 
-  // This is a button to configure Simonish buttons
-  const addBtn = document.querySelector("#config-btn");
-   
-   addBtn.addEventListener("click", () => {
-    if (configButtonListerEnabled) {
-        // hide & seek with the form
-        configureButtons = !configureButtons;
-        if (configureButtons) {
-            clearLoserX()
-            displayButtonConfigForm();
-        } else {
-            clearButtonConfigForm();
+
+    // This is a button to configure Simonish buttons
+    const addBtn = document.querySelector("#config-btn");
+
+    addBtn.addEventListener("click", () => {
+        if (configButtonListerEnabled) {
+            // hide & seek with the form
+            configureButtons = !configureButtons;
+            if (configureButtons) {
+                clearLoserX()
+                displayButtonConfigForm();
+            } else {
+                clearButtonConfigForm();
+            }
         }
-    }
-  });
+    });
 })
 
 
 
- fetch( "http://localhost:3000/buttons")
-.then(result => result.json())
-.then(buttons => {
- 
-    buttons.forEach(renderOneButton)
-    buttons.forEach(preloadButtonFormFields)
-    createSubmitEventListeners();
-    buttonData = Array.from(buttons)
+fetch("http://localhost:3000/buttons")
+    .then(result => result.json())
+    .then(buttons => {
 
-    // Now that the game is all set up, add the event listener for the start button.
-    let startGameButton = document.getElementById("start-game");
-    startGameButton.addEventListener("click", startGame)
- 
-    
-})
-.catch(e => console.log(e))
+        buttons.forEach(renderOneButton)
+        buttons.forEach(preloadButtonFormFields)
+        createSubmitEventListeners();
+        buttonData = Array.from(buttons)
 
-fetch ("http://localhost:3000/highScore/1")
-.then(result => result.json())
-.then(highScoreResult => {
-    highScore = highScoreResult.score;
-    updateHighScoreDisplay();
-})
+        // Now that the game is all set up, add the event listener for the start button.
+        let startGameButton = document.getElementById("start-game");
+        startGameButton.addEventListener("click", startGame)
+
+
+    })
+    .catch(e => console.log(e))
+
+fetch("http://localhost:3000/highScore/1")
+    .then(result => result.json())
+    .then(highScoreResult => {
+        highScore = highScoreResult.score;
+        updateHighScoreDisplay();
+    })
 
 function createSubmitEventListeners() {
     // There are 6 submit buttons.  They all have id's of the form id ="buttonx-submit" where x
     // is a number 1 - 5
 
     for (i = 0; i < 6; i++) {
-        
+
         // Add 1 to i since the forms are indexed from 1.
-        document.getElementById(`button${i+1}-form`).addEventListener("submit",(event) => {   
+        document.getElementById(`button${i + 1}-form`).addEventListener("submit", (event) => {
             if (submitEnabled === true) {
                 event.preventDefault();
                 // event.target is the DOM node of the submit button.  
                 // Extract the index of the submit
-                let index = event.target.id.slice(6,7);
+                let index = event.target.id.slice(6, 7);
 
-                let j=0;
+                let j = 0;
                 // The waveform data is in a radio button.  Go through all the buttons and determine
                 // which one is checked.  The waveform is translated to a number 0-3 (i.e., sine = 0, square = 1, 
                 // sawtooth = 2, triangle = 3)
@@ -121,26 +121,26 @@ function createSubmitEventListeners() {
 
                 // The frequency input id's are of the format "button-x-freq"
                 buttonData[index - 1].frequency = document.getElementById(`button-${index}-freq`).value;
-               
+
                 // The color pull down id's are of the format "buttonx-color" where x = 1 to 6.
                 buttonData[index - 1].color = document.getElementById(`button${index}-color`).value;
-                
+
                 // Update the color on the actual button
                 let buttonCandidate = document.getElementById(`button_${buttonData[index - 1].id}`)
                 buttonCandidate.style.backgroundColor = buttonData[index - 1].color
-                                
-                const bodyData = {color: buttonData[index - 1].color, frequency: buttonData[index - 1].frequency, waveform: buttonData[index - 1].waveform };
+
+                const bodyData = { color: buttonData[index - 1].color, frequency: buttonData[index - 1].frequency, waveform: buttonData[index - 1].waveform };
                 patchHost(`http://localhost:3000/buttons/${index}`, bodyData)
 
             }
         })
-        
+
     }
 }
 function preloadButtonFormFields(buttonInfo) {
 
     // Configure the waveform radio buttons
-    switch(buttonInfo.waveform) {
+    switch (buttonInfo.waveform) {
         case 0:
             document.getElementById(`button${buttonInfo.id}-sine`).checked = true;
             break
@@ -153,7 +153,7 @@ function preloadButtonFormFields(buttonInfo) {
         case 3:
             document.getElementById(`button${buttonInfo.id}-triangle`).checked = true;
             break;
-    } 
+    }
 
     // Populate the color pull down menu
     document.getElementById(`button${buttonInfo.id}-color`).value = buttonInfo.color
@@ -162,25 +162,24 @@ function preloadButtonFormFields(buttonInfo) {
     document.getElementById(`button-${buttonInfo.id}-freq`).value = buttonInfo.frequency
 
 }
-    
+
 function patchHost(url, bodyData) {
     fetch(url, {
         method: "PATCH",
         headers: {
-          'Content-Type': "application/json"
-         },
+            'Content-Type': "application/json"
+        },
         body: JSON.stringify(bodyData)
-      })
-    .then(res => res.json())
-    .then(updatedRes => console.log(updatedRes))
-    .catch(err => console.log(err))
+    })
+        .then(res => res.json())
+        .then(updatedRes => console.log(updatedRes))
+        .catch(err => console.log(err))
 }
 
 
 console.log("Configured")
 
-function startGame()
-{
+function startGame() {
     if (startButtonListenerEnabled) {
         console.log("StartGame")
         // Turn of the strike x from the failing game
@@ -210,36 +209,35 @@ function updateHighScoreDisplay() {
 function processLoss() {
     displayLoserX()
     generateLoserSound();
-    
+
 
     // Update the high score display if the record is broken
     if (sequence.array.length > highScore) {
         highScore = sequence.array.length
         updateHighScoreDisplay();
-        patchHost("http://localhost:3000/highScore/1", {score: highScore})
-        
+        patchHost("http://localhost:3000/highScore/1", { score: highScore })
+
     }
     disableGameButtonsListener()
-    enableGameStartButtonListener( )
+    enableGameStartButtonListener()
     enableConfigButtonListener()
 
 }
 
-function userPlaybackTimeout( ) {
+function userPlaybackTimeout() {
     processLoss();
 }
-function restoreButtonUserSequence()
-{
+function restoreButtonUserSequence() {
     let button = document.getElementById(`button_${sequence.array[sequence.userPlaybackIndex]}`)
     button.style.filter = "brightness(50%)";
     // oscillatorNode.stop();
     if (sequence.userPlaybackIndex === sequence.index) {
         // The user has successfully repeated the sequence.  Repeat the 
         // sequence and add 1 more to it.  Delay 1 second before initiating the sequence.
-        setTimeout( initiateSequence, 1000);
+        setTimeout(initiateSequence, 1000);
     } else {
         // Set up to look for the user's input on the next item in the sequence
-        sequence.userPlaybackIndex++;    
+        sequence.userPlaybackIndex++;
         userPlaybackWatchdog = setTimeout(userPlaybackTimeout, 2000);
 
     }
@@ -275,8 +273,7 @@ function displayButtonConfigForm() {
 function disableConfigButtonListener() {
     configButtonListerEnabled = false;
 }
-function enableConfigButtonListener()
-{
+function enableConfigButtonListener() {
     configButtonListerEnabled = true;
 }
 
@@ -292,14 +289,13 @@ function displayLoserX() {
 
 }
 function checkUserPlayback(event) {
-    if (gameButtonsListenerEnabled)
-    {
+    if (gameButtonsListenerEnabled) {
         // The id of the element is "button_${id}".  Use slice to get rid of "button_"
         let id = parseInt(event.target.id.slice(7));
 
-       clearTimeout(userPlaybackWatchdog);
-        if (id === sequence.array[sequence.userPlaybackIndex] ) {
-           generateSoundForButton(false) 
+        clearTimeout(userPlaybackWatchdog);
+        if (id === sequence.array[sequence.userPlaybackIndex]) {
+            generateSoundForButton(false)
             // let the brightness rip!
             event.target.style.filter = "brightness(200%)"
             // Leave the button bright for 200 milliseconds before looking for the next item in the sequence.
@@ -319,7 +315,7 @@ function initializeUserPlayback() {
     userPlaybackWatchdog = setTimeout(userPlaybackTimeout, 2000);
 }
 function sequenceComplete() {
-    return(sequence.index === (sequence.array.length - 1) )
+    return (sequence.index === (sequence.array.length - 1))
 }
 
 function clearButtonInSequence() {
@@ -353,7 +349,7 @@ function generateSoundForButton(hostSequenceActive) {
 
     let buttonDataIndex
     // The buttons are indexed from 1, but the buttonData array is indexed from 0.
-    if (hostSequenceActive ) {
+    if (hostSequenceActive) {
         buttonDataIndex = sequence.array[sequence.index] - 1
     } else {
         buttonDataIndex = sequence.array[sequence.userPlaybackIndex] - 1
@@ -363,7 +359,7 @@ function generateSoundForButton(hostSequenceActive) {
     // The waveform is different from the frequency.  The stored value is an index
     // into a lookup table that has a string that describes the waveform.
     oscillatorNode.type = waveforms[buttonData[buttonDataIndex].waveform]
-    d =  waveforms[buttonData[sequence.array[sequence.index] - 1].waveform]
+    d = waveforms[buttonData[sequence.array[sequence.index] - 1].waveform]
 
     gainNode.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + 1)
     oscillatorNode.connect(gainNode);
@@ -371,16 +367,11 @@ function generateSoundForButton(hostSequenceActive) {
     oscillatorNode.start(0);
 }
 function nextButtonInSequence() {
-    
+
     sequence.index++;
     let button = document.getElementById(`button_${sequence.array[sequence.index]}`)
     button.style.filter = "brightness(200%)"
     generateSoundForButton(true)
-
-//    if (context === null) {
-//        context = new AudioContext();
-//    }
-
 
     if (sequenceComplete() === false) {
 
@@ -388,12 +379,12 @@ function nextButtonInSequence() {
     }
 
     // Set the current button back to it's non-bright color.
-    setTimeout(clearButtonInSequence,(3 * sequenceDuration/4));
+    setTimeout(clearButtonInSequence, (3 * sequenceDuration / 4));
 
 }
 
 function initiateSequence() {
-    
+
     disableGameButtonsListener();
     if (sequence.array.length != 0) {
         sequence.index = sequence.array.length;
@@ -407,7 +398,7 @@ function initiateSequence() {
 
     let scoreDisplay = document.getElementById("score")
     scoreDisplay.innerText = `Score: ${sequence.array.length}`
- 
+
     if (sequence.array.length <= 6) {
         sequenceDuration = 1000
     } else if (sequence.array.length < 10) {
@@ -416,18 +407,18 @@ function initiateSequence() {
         sequenceDuration = 400
     }
 
-    
+
     // Boundary condition for the 0th member of the sequence
     sequence.index = -1;
     nextButtonInSequence();
- 
+
 }
 
 
 let renderOneButton = (button) => {
-  
+
     let buttonCollection = document.getElementById("button-collection");
-  
+
     // Create a new button card. 
     let buttonDiv = document.createElement("div");
     buttonDiv.className = "card";
@@ -436,8 +427,8 @@ let renderOneButton = (button) => {
     buttonDiv.id = `button_${button.id}`
     buttonDiv.addEventListener("click", checkUserPlayback)
 
- 
+
     // Now append the card div node to the to collection
     buttonCollection.appendChild(buttonDiv);
- 
+
 }
