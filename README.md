@@ -1,11 +1,19 @@
 # Simon...ish
 - This program mimics the behavior of the old (extremely!) Simon electronic game
-## Game Overview
+
+## Installation
+Go to https://github.com/LynnEdwardMcqueen/phase-1-project-simon.  Fork the project and clone to your local machine.  This program uses a simulated JSON server for its API.  To start the server, you must go to the source directory and run the json-server simulation program as shown below. 
+
+![JSON Server](./src/json%20server.png)
+
+Once the json-server is running, you can run the index.html file and begin execution of the program.  
+
+## Usage
 By pushing the start button as shown below, the game issues a sequence of sounded lights and then waits for you to repeat the sequence.  
 
 ![Start Game](./src/Simon%20Game%20Start.png) 
 
-Once you successfully repeat the sequence, it adds an additional item to the sequence.  As the sequence becomes longer, the speed of the sequence increases.  This goes on until either you incorrectly playback the sequence or 2 seconds elapse without a button being pushed.  The failure screen looks as shown below.
+Once you successfully repeat the sequence, it adds an additional item to the sequence.  As the sequence becomes longer, the speed increases.  This goes on until either you incorrectly playback the sequence or 2 seconds elapse without a button being pushed.  The failure screen looks as shown below.
 
 ![Game Fail](./src/Simon%20Failure.png)
 
@@ -20,12 +28,8 @@ Once the "Configure Game Buttons" is clicked, the following forms appear.  Your 
 - The color of the button.
 - The frequency of the sound (70 - 10000 hz)
 
+Once the desired configurations for an individual game button have been made, the "Button x Update" submit must be clicked for the changes to take effect (x = 1 - 6).
+
 ![Config Forms](./src/Simon%20Config%20Forms.png)
 
-### Running the Game
-This program is invoked by running index.html.  This game uses a simulated API.  Prior to running index.html, you must run the server simulation program.  To successfully execute the program, you must invoke the json server as shown below:
-
-![JSON Server](./src/json%20server.png)
-
-After the server simulator is running, you can successfully run index.html and play the game.  Good luck!
 
