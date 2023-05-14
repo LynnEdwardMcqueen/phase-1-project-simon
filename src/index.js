@@ -13,6 +13,7 @@ let highScore
 let submitEnabled = true
 let gameButtonsListenerEnabled = false
 let startButtonListenerEnabled = true;
+let configButtonListerEnabled = true;
 
 // This is the state information for the game.  The array keeps a record of the 
 // buttons in the sequence.  index is the current button on the game's presentation
@@ -52,13 +53,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const addBtn = document.querySelector("#config-btn");
    
    addBtn.addEventListener("click", () => {
-    // hide & seek with the form
-    configureButtons = !configureButtons;
-    if (configureButtons) {
-        clearLoserX()
-        displayButtonConfigForm();
-    } else {
-        clearButtonConfigForm();
+    if (configButtonListerEnabled) {
+        // hide & seek with the form
+        configureButtons = !configureButtons;
+        if (configureButtons) {
+            clearLoserX()
+            displayButtonConfigForm();
+        } else {
+            clearButtonConfigForm();
+        }
     }
   });
 })
@@ -78,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let startGameButton = document.getElementById("start-game");
     startGameButton.addEventListener("click", startGame)
  
-    // Once game has started, disable configure buttons
+    
 })
 .catch(e => console.log(e))
 
@@ -182,6 +185,9 @@ function startGame()
         console.log("StartGame")
         // Turn of the strike x from the failing game
         clearLoserX()
+
+        // Don't allow game button configuration while a game is running
+        disableConfigButtonListener()
         // Turn off the button configuration forms
         clearButtonConfigForm()
         // Don't allow the user to initiate a new game while starting this one.
@@ -204,6 +210,7 @@ function updateHighScoreDisplay() {
 function processLoss() {
     displayLoserX()
     generateLoserSound();
+    
 
     // Update the high score display if the record is broken
     if (sequence.array.length > highScore) {
@@ -214,7 +221,7 @@ function processLoss() {
     }
     disableGameButtonsListener()
     enableGameStartButtonListener( )
-
+    enableConfigButtonListener()
 
 }
 
@@ -263,6 +270,14 @@ function clearButtonConfigForm() {
 function displayButtonConfigForm() {
     const configureButtonsContainer = document.querySelector("#config-container");
     configureButtonsContainer.style.display = "block";
+}
+
+function disableConfigButtonListener() {
+    configButtonListerEnabled = false;
+}
+function enableConfigButtonListener()
+{
+    configButtonListerEnabled = true;
 }
 
 function clearLoserX() {
